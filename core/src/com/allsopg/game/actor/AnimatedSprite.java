@@ -14,6 +14,7 @@ import java.util.Comparator;
 
 /**
  * Created by gja10 on 13/11/2017.
+ * Updated by bst19 on 14/02/2018 - changed global variables to protected, moved regions variable to global and protected.
  */
 
 public class AnimatedSprite extends Sprite {

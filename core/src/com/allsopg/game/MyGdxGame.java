@@ -28,9 +28,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		Texture small = new Texture(Gdx.files.internal("gfx/smallSize.png"));
 		Texture medium = new Texture(Gdx.files.internal("gfx/mediumSize.png"));
 		noodles = new NoodlesPickup(small,
-				new Vector2(0,0));
-		noodles.spawn();
-		//noodles.idle();
+				new Vector2(250,200));
+		//noodles.spawn();
+		noodles.discard();
 	}
 	@Override
 	public void render () {

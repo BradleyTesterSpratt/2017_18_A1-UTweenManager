@@ -17,6 +17,7 @@ import aurelienribon.tweenengine.TweenManager;
 /**
  * Created by gja on 13/11/2017.
  * Updated by gja on 19/10/2017
+ * Updated by bst19 on 14/02/2018 - changed global variables to protected
  */
 
 public class BonusSprite extends AnimatedSprite {
