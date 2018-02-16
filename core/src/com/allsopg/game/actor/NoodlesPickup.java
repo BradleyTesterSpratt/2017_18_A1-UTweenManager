@@ -49,7 +49,7 @@ public class NoodlesPickup extends BonusSprite
     {
         chooseFrames(0,2,12,Animation.PlayMode.NORMAL);
         Tween.to(tweenData, TweenDataAccessor.TYPE_POS, 6f).targetRelative(0, 10).start(tweenManager)
-             .to(tweenData, TweenDataAccessor.TYPE_POS, 6f).delay(10f).targetRelative(0, -10).setCallback(new TweenCallback()
+             .to(tweenData, TweenDataAccessor.TYPE_POS, 6f).delay(6f).targetRelative(0, -10).setCallback(new TweenCallback()
             {
                 @Override
                 public void onEvent(int type, BaseTween<?> source)
@@ -61,7 +61,7 @@ public class NoodlesPickup extends BonusSprite
 
     private void idle()
     {
-        chooseFrames(2, 4, 4, Animation.PlayMode.LOOP);
+        chooseFrames(3, 5, 4, Animation.PlayMode.LOOP);
         Tween.to(tweenData, TweenDataAccessor.TYPE_ROTATION,10f).target(10f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_ROTATION,20f).delay(10f).target(-10f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_ROTATION,10f).delay(30f).target(0f).start(tweenManager);
@@ -69,14 +69,11 @@ public class NoodlesPickup extends BonusSprite
 
     /**
      * should be private to be called only by collision
-     *
      */
-    public void discard()
+    public void consume()
     {
-        //add additional frame
-        chooseFrames(5,5,4, Animation.PlayMode.LOOP);
+        chooseFrames(6,7,5, Animation.PlayMode.LOOP);
         Tween.to(tweenData, TweenDataAccessor.TYPE_POS,2f).targetRelative(-7,10f).start(tweenManager)
-                //.to(tweenData, TweenDataAccessor.TYPE_ROTATION, 4f).target(-18f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_POS,2f).delay(2f).targetRelative(-10,12f).start(tweenManager)
                 .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(2f).targetRelative(22.5f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_POS,2f).delay(4f).targetRelative(-9,10f).start(tweenManager)
@@ -94,20 +91,31 @@ public class NoodlesPickup extends BonusSprite
              .to(tweenData, TweenDataAccessor.TYPE_POS,2f).delay(18f).targetRelative(-6,-13f).start(tweenManager)
                 .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(18f).targetRelative(22.5f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_POS,2f).delay(20f).targetRelative(-5,-16f).start(tweenManager)
-                .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(18f).targetRelative(200f).start(tweenManager).setCallback(new TweenCallback()
-        {
-            @Override
-            public void onEvent(int type, BaseTween<?> source)
-            {
-                chooseFrames(6,6,1,Animation.PlayMode.NORMAL);
-            }
-        }).start(tweenManager);
+                .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(20f).targetRelative(180f).setCallback(new TweenCallback()
+                {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source)
+                    {
+                        chooseFrames(8,8,1,Animation.PlayMode.NORMAL);
+
+                    }
+                }).start(tweenManager);
     }
 
+    public void discard()
+    {
+        chooseFrames(9,10,10,Animation.PlayMode.LOOP);
+        Tween.to(tweenData,TweenDataAccessor.TYPE_POS,7f).targetRelative(0f,20f).start(tweenManager)
+             .to(tweenData,TweenDataAccessor.TYPE_SCALE, 7f).target(2f).start(tweenManager)
+             //use scene height so it always has to fall off screen
+             .to(tweenData,TweenDataAccessor.TYPE_POS,60f).delay(7f).targetRelative(0f,-Constants.SCENE_HEIGHT).start(tweenManager);
+
+    }
     /**
      * newX and newY methods can be used with a moving spawner
      * use in place of .targetReleative
      * eg .target(newX,newY)
+     * only needs to be used with spawn()
     **/
     private Float newX(float offset)
     {
