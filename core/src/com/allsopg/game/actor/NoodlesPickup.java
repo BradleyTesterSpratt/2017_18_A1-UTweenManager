@@ -1,5 +1,6 @@
 package com.allsopg.game.actor;
 
+import com.allsopg.game.sound.SoundLink;
 import com.allsopg.game.utility.Constants;
 import com.allsopg.game.utility.TweenData;
 import com.allsopg.game.utility.TweenDataAccessor;
@@ -10,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 
@@ -22,12 +22,13 @@ public class NoodlesPickup extends BonusSprite
 {
     //updated by a moving spawner
     private Vector2 currentPos;
-
+    private SoundLink soundLink;
 
     public NoodlesPickup(Texture t, Vector2 pos)
     {
         super("gfx/noodles.atlas", t, pos, Animation.PlayMode.LOOP);
         currentPos=pos;
+        soundLink=new SoundLink();
     }
 
     /**
@@ -49,14 +50,15 @@ public class NoodlesPickup extends BonusSprite
     {
         chooseFrames(0,2,12,Animation.PlayMode.NORMAL);
         Tween.to(tweenData, TweenDataAccessor.TYPE_POS, 6f).targetRelative(0, 10).start(tweenManager)
-             .to(tweenData, TweenDataAccessor.TYPE_POS, 6f).delay(6f).targetRelative(0, -10).setCallback(new TweenCallback()
-            {
-                @Override
-                public void onEvent(int type, BaseTween<?> source)
-                {
-                    idle();
-                }
-            }).start(tweenManager);
+             .to(tweenData, TweenDataAccessor.TYPE_POS, 6f).delay(6f).targetRelative(0, -10)
+             .setCallback(new TweenCallback()
+             {
+                 @Override
+                 public void onEvent(int type, BaseTween<?> source)
+                 {
+                     idle();
+                 }
+             }).start(tweenManager);
     }
 
     private void idle()
@@ -75,41 +77,47 @@ public class NoodlesPickup extends BonusSprite
         chooseFrames(6,7,5, Animation.PlayMode.LOOP);
         Tween.to(tweenData, TweenDataAccessor.TYPE_POS,2f).targetRelative(-7,10f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_POS,2f).delay(2f).targetRelative(-10,12f).start(tweenManager)
-                .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(2f).targetRelative(22.5f).start(tweenManager)
+             .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(2f).targetRelative(22.5f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_POS,2f).delay(4f).targetRelative(-9,10f).start(tweenManager)
-                .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(4f).targetRelative(22.5f).start(tweenManager)
+             .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(4f).targetRelative(22.5f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_POS,2f).delay(6f).targetRelative(-8,9f).start(tweenManager)
-                .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(6f).targetRelative(22.5f).start(tweenManager)
+             .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(6f).targetRelative(22.5f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_POS,2f).delay(8f).targetRelative(-7,0f).start(tweenManager)
-                .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(8f).targetRelative(22.5f).start(tweenManager)
+             .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(8f).targetRelative(22.5f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_POS,2f).delay(10f).targetRelative(-7,-9f).start(tweenManager)
-                .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(10f).targetRelative(22.5f).start(tweenManager)
+             .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(10f).targetRelative(22.5f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_POS,2f).delay(12f).targetRelative(-7,-9f).start(tweenManager)
-                .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(12f).targetRelative(22.5f).start(tweenManager)
+             .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(12f).targetRelative(22.5f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_POS,2f).delay(16f).targetRelative(-6,-11f).start(tweenManager)
-                .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(16f).targetRelative(22.5f).start(tweenManager)
+             .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(16f).targetRelative(22.5f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_POS,2f).delay(18f).targetRelative(-6,-13f).start(tweenManager)
-                .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(18f).targetRelative(22.5f).start(tweenManager)
+             .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(18f).targetRelative(22.5f).start(tweenManager)
              .to(tweenData, TweenDataAccessor.TYPE_POS,2f).delay(20f).targetRelative(-5,-16f).start(tweenManager)
-                .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(20f).targetRelative(180f).setCallback(new TweenCallback()
-                {
-                    @Override
-                    public void onEvent(int type, BaseTween<?> source)
-                    {
-                        chooseFrames(8,8,1,Animation.PlayMode.NORMAL);
-
-                    }
-                }).start(tweenManager);
+             .to(tweenData, TweenDataAccessor.TYPE_ROTATION, 2f).delay(20f).targetRelative(180f)
+             .setCallback(new TweenCallback()
+             {
+                 @Override
+                 public void onEvent(int type, BaseTween<?> source)
+                 {
+                     chooseFrames(8,8,1,Animation.PlayMode.NORMAL);
+                 }
+             }).start(tweenManager);
     }
 
     public void discard()
     {
         chooseFrames(9,10,10,Animation.PlayMode.LOOP);
         Tween.to(tweenData,TweenDataAccessor.TYPE_POS,7f).targetRelative(0f,20f).start(tweenManager)
-             .to(tweenData,TweenDataAccessor.TYPE_SCALE, 7f).target(2f).start(tweenManager)
+             .to(tweenData,TweenDataAccessor.TYPE_SCALE, 7f).target(2f)
+                .setCallback(new TweenCallback()
+                {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source) {
+                        soundLink.play(1);
+                    }
+                })   .start(tweenManager)
              //use scene height so it always has to fall off screen
              .to(tweenData,TweenDataAccessor.TYPE_POS,60f).delay(7f).targetRelative(0f,-Constants.SCENE_HEIGHT).start(tweenManager);
-
     }
     /**
      * newX and newY methods can be used with a moving spawner
