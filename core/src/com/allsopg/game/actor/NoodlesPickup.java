@@ -1,11 +1,15 @@
 package com.allsopg.game.actor;
 
 import com.allsopg.game.sound.SoundLink;
+import com.allsopg.game.utility.BitmapText;
 import com.allsopg.game.utility.Constants;
 import com.allsopg.game.utility.TweenData;
 import com.allsopg.game.utility.TweenDataAccessor;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -23,12 +27,27 @@ public class NoodlesPickup extends BonusSprite
     //updated by a moving spawner
     private Vector2 currentPos;
     private SoundLink soundLink;
+    //for text
+    private SpriteBatch batch;
+    private BitmapText bText;
 
     public NoodlesPickup(Texture t, Vector2 pos)
     {
         super("gfx/noodles.atlas", t, pos, Animation.PlayMode.LOOP);
         currentPos=pos;
         soundLink=new SoundLink();
+        //for text
+        batch = new SpriteBatch();
+        bText= new BitmapText("SPLAT", Color.BLACK, 200f,1,true);
+    }
+
+    public void render()
+    {
+        batch.begin();
+        bText.getFont().draw(batch, bText.getGlyphLayout(),
+                (Gdx.graphics.getWidth()/2)-(bText.getGlyphLayout().width/2),
+        		Gdx.graphics.getHeight()*9/10);
+        batch.end();
     }
 
     /**
@@ -104,6 +123,9 @@ public class NoodlesPickup extends BonusSprite
              }).start(tweenManager);
     }
 
+    /**
+     * should be private to be called only by collision
+     */
     public void discard()
     {
         chooseFrames(9,10,10,Animation.PlayMode.LOOP);
@@ -114,6 +136,7 @@ public class NoodlesPickup extends BonusSprite
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
                         soundLink.play(1);
+                        render();
                     }
                 })   .start(tweenManager)
              //use scene height so it always has to fall off screen

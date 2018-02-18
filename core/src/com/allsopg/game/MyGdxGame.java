@@ -1,16 +1,16 @@
 package com.allsopg.game;
 
 import com.allsopg.game.actor.NoodlesPickup;
-import com.allsopg.game.utility.BitmapText;
+//import com.allsopg.game.utility.BitmapText;
 import com.allsopg.game.utility.Constants;
 import com.allsopg.game.utility.UniversalResource;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
+//import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
+//import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -22,7 +22,7 @@ public class MyGdxGame extends ApplicationAdapter {
     private SpriteBatch batch;
 	private NoodlesPickup noodles;
     private float animationTime;
-	private BitmapText bText;
+	//private BitmapText bText;
 	@Override
 	public void create () {
 		camera = new OrthographicCamera();
@@ -34,7 +34,7 @@ public class MyGdxGame extends ApplicationAdapter {
 				new Vector2(250,200));
 		//noodles.spawn();
 		noodles.discard();
-		bText= new BitmapText("test", Color.BLACK, 200f,1,true);
+		//bText= new BitmapText("test", Color.BLACK, 200f,1,true);
 	}
 	@Override
 	public void render () {
@@ -45,9 +45,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.begin();
         noodles.update(animationTime);
         noodles.draw(batch);
-		bText.getFont().draw(batch, bText.getGlyphLayout(),
-				Gdx.graphics.getWidth()/20, //-(bText.getGlyphLayout().width/2),
-				Gdx.graphics.getHeight()*9/10); //-(bText.getGlyphLayout().height/2));
+		//bText.getFont().draw(batch, bText.getGlyphLayout(),
+		//		Gdx.graphics.getWidth()/20, //-(bText.getGlyphLayout().width/2),
+		//		Gdx.graphics.getHeight()*9/10); //-(bText.getGlyphLayout().height/2));
 		batch.end();
 	}
 	@Override
