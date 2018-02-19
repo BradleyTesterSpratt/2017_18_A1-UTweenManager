@@ -1,15 +1,10 @@
 package com.allsopg.game.actor;
 
 import com.allsopg.game.sound.SoundLink;
-import com.allsopg.game.utility.BitmapText;
 import com.allsopg.game.utility.Constants;
-import com.allsopg.game.utility.TweenData;
 import com.allsopg.game.utility.TweenDataAccessor;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -28,6 +23,12 @@ public class NoodlesPickup extends BonusSprite
     private Vector2 currentPos;
     private SoundLink soundLink;
 
+    /**
+     * Constructor for the noodle pickup
+     *
+     * @param t texture file used to set the size
+     * @param pos vector2 used to set the objects starting position and to be used to update position with a moving spawner
+     */
     public NoodlesPickup(Texture t, Vector2 pos)
     {
         super("gfx/noodles.atlas", t, pos, Animation.PlayMode.LOOP);
@@ -36,9 +37,16 @@ public class NoodlesPickup extends BonusSprite
     }
 
     /**
+     * Changes which frames and what speed to use for the animation
+     *
      * This could be moved into the animated sprite class, so that the
      * regions variable doesnt need to be global. It will also likely be needed
      * by a player character.
+     *
+     * @param startFrame identifier of the first frame to be used
+     * @param endFrame identifier of the last frame
+     * @param speedModifier float used to speed up or slow down the animation speed
+     * @param loopType ype of loop to use
      */
     private void chooseFrames(int startFrame, int endFrame, int speedModifier, Animation.PlayMode loopType)
     {
@@ -50,6 +58,12 @@ public class NoodlesPickup extends BonusSprite
         animation = new Animation(Constants.FRAME_DURATION*speedModifier,animatedRegions,loopType);
     }
 
+    /**
+     * Method to spawn the Noodles
+     *
+     * When spawned with a mobile spawner will need to use the
+     * newX and newY methods
+     */
     public void spawn()
     {
         chooseFrames(0,2,12,Animation.PlayMode.NORMAL);
@@ -65,6 +79,10 @@ public class NoodlesPickup extends BonusSprite
              }).start(tweenManager);
     }
 
+    /**
+     * method to set the sprite to its main state
+     * only to be called by spawn method
+     */
     private void idle()
     {
         chooseFrames(3, 5, 4, Animation.PlayMode.LOOP);
@@ -74,6 +92,9 @@ public class NoodlesPickup extends BonusSprite
     }
 
     /**
+     * method to start the consume animation. To be used
+     * when the player collides under certain circumstances
+     *
      * should be private to be called only by collision
      */
     public void consume()
@@ -109,6 +130,9 @@ public class NoodlesPickup extends BonusSprite
     }
 
     /**
+     * method to start the discard animation. To be used
+     * when the player collides under certain circumstances
+     *
      * should be private to be called only by collision
      */
     public void discard()
@@ -124,14 +148,15 @@ public class NoodlesPickup extends BonusSprite
                         soundLink.play(1);
                     }
                 }).start(tweenManager)
-             //use scene height so it always has to fall off screen
-             .to(tweenData,TweenDataAccessor.TYPE_POS,60f).delay(7f).targetRelative(0f,-Constants.SCENE_HEIGHT).start(tweenManager);
+             .to(tweenData,TweenDataAccessor.TYPE_POS,60f).delay(7f).targetRelative(0f,-Constants.SCENE_HEIGHT*2).start(tweenManager);
     }
+
     /**
-     * newX and newY methods can be used with a moving spawner
+     * method to be used with a moving spawner
      * use in place of .targetReleative
      * eg .target(newX,newY)
-     * only needs to be used with spawn()
+     *
+     * @param offset float to set where to offset the X
     **/
     private Float newX(float offset)
     {
@@ -140,6 +165,13 @@ public class NoodlesPickup extends BonusSprite
         return newX;
     }
 
+    /**
+     * method to be used with a moving spawner
+     * use in place of .targetReleative
+     * eg .target(newX,newY)
+     *
+     * @param offset float to set where to offset the Y
+     **/
     private Float newY(float offset)
     {
         float newY = currentPos.y+offset;

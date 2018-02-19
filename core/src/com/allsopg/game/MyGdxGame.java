@@ -14,6 +14,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
+
 public class MyGdxGame extends ApplicationAdapter {
     private OrthographicCamera camera;
     private Viewport view;
@@ -30,7 +32,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		Texture small = new Texture(Gdx.files.internal("gfx/smallSize.png"));
 		Texture medium = new Texture(Gdx.files.internal("gfx/mediumSize.png"));
 		noodles = new NoodlesPickup(small,
-				new Vector2(250,200));
+				new Vector2(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2)
+				);
 		//noodles.spawn();
 		//bText= new BitmapText("Spawn", Color.BLACK, 200f,1,true);
 		//noodles.consume();
@@ -44,12 +47,14 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		animationTime +=Gdx.graphics.getDeltaTime();
 		UniversalResource.getInstance().tweenManager.update(animationTime);
+		//delay to capture video
+		delay(10f);
 		batch.begin();
         noodles.update(animationTime);
         noodles.draw(batch);
 		bText.getFont().draw(batch, bText.getGlyphLayout(),
-				Gdx.graphics.getWidth()/20, //-(bText.getGlyphLayout().width/2),
-				Gdx.graphics.getHeight()*9/10); //-(bText.getGlyphLayout().height/2));
+				Gdx.graphics.getWidth()/20,
+				Gdx.graphics.getHeight()*9/10);
 		batch.end();
 	}
 	@Override
