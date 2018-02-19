@@ -27,27 +27,12 @@ public class NoodlesPickup extends BonusSprite
     //updated by a moving spawner
     private Vector2 currentPos;
     private SoundLink soundLink;
-    //for text
-    private SpriteBatch batch;
-    private BitmapText bText;
 
     public NoodlesPickup(Texture t, Vector2 pos)
     {
         super("gfx/noodles.atlas", t, pos, Animation.PlayMode.LOOP);
         currentPos=pos;
         soundLink=new SoundLink();
-        //for text
-        batch = new SpriteBatch();
-        bText= new BitmapText("SPLAT", Color.BLACK, 200f,1,true);
-    }
-
-    public void render()
-    {
-        batch.begin();
-        bText.getFont().draw(batch, bText.getGlyphLayout(),
-                (Gdx.graphics.getWidth()/2)-(bText.getGlyphLayout().width/2),
-        		Gdx.graphics.getHeight()*9/10);
-        batch.end();
     }
 
     /**
@@ -134,11 +119,11 @@ public class NoodlesPickup extends BonusSprite
                 .setCallback(new TweenCallback()
                 {
                     @Override
-                    public void onEvent(int type, BaseTween<?> source) {
+                    public void onEvent(int type, BaseTween<?> source)
+                    {
                         soundLink.play(1);
-                        render();
                     }
-                })   .start(tweenManager)
+                }).start(tweenManager)
              //use scene height so it always has to fall off screen
              .to(tweenData,TweenDataAccessor.TYPE_POS,60f).delay(7f).targetRelative(0f,-Constants.SCENE_HEIGHT).start(tweenManager);
     }
